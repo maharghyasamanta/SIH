@@ -14,6 +14,18 @@ export default {
     },
     extend: {
       colors: {
+        disaster: {
+          coral: "#e55252",
+          teal: "#337e69",
+          ink: "#12232a",
+          mist: "#f7f9fb",
+        },
+        risk: {
+          critical: "#e65353",
+          high: "#e98b42",
+          moderate: "#e4b94b",
+          low: "#57a681",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

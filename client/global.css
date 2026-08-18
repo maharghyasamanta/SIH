@@ -1,121 +1,66 @@
-/** @import must precede all other statements */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
 @import "tailwindcss";
-
-/* Theme, content globs, and plugins are declared in tailwind.config.ts. */
 @config "../tailwind.config.ts";
 
 @layer base {
-  /**
-   * Tailwind CSS theme
-   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
-   * A different format will require also updating the theme in tailwind.config.ts.
-  */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    --background: 210 33% 98%;
+    --foreground: 204 29% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 204 29% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --popover-foreground: 204 29% 12%;
+    --primary: 4 75% 61%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 151 38% 93%;
+    --secondary-foreground: 163 43% 35%;
+    --muted: 210 24% 95%;
+    --muted-foreground: 207 12% 49%;
+    --accent: 151 38% 93%;
+    --accent-foreground: 163 43% 35%;
+    --destructive: 4 75% 61%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 20% 89%;
+    --input: 210 20% 89%;
+    --ring: 163 43% 35%;
+    --radius: .65rem;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 204 29% 12%;
+    --sidebar-primary: 4 75% 61%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 151 38% 93%;
+    --sidebar-accent-foreground: 163 43% 35%;
+    --sidebar-border: 210 20% 89%;
+    --sidebar-ring: 163 43% 35%;
   }
+
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body { @apply bg-background text-foreground; font-family: "DM Sans", sans-serif; }
+  h1, h2, h3, h4, h5, h6 { font-family: "Space Grotesk", sans-serif; }
+  button, a, input, select, textarea { font-family: inherit; }
+  :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) { overflow-wrap: anywhere; word-break: break-word; }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-
-  :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
-  pre,
-  code {
-    overflow-x: auto;
-    white-space: pre;
-  }
+@layer utilities {
+  .section-kicker { @apply text-[10px] font-extrabold uppercase tracking-[.18em] text-[#337e69]; }
+  .section-title { @apply mt-3 text-[32px] font-extrabold leading-[1.08] tracking-[-.045em] text-slate-950 sm:text-[42px]; }
+  .section-copy { @apply mt-4 text-[14px] leading-6 text-slate-500; }
+  .avatar { @apply flex h-6 w-6 items-center justify-center rounded-full border-2 border-white text-[8px] font-extrabold text-white; }
+  .grid-pattern { background-image: linear-gradient(rgba(51,126,105,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(51,126,105,.06) 1px, transparent 1px); background-size: 32px 32px; mask-image: linear-gradient(to bottom, black, transparent 75%); }
+  .map-surface { background-color: #eaf0ed; background-image: linear-gradient(32deg, transparent 46%, rgba(99,134,120,.13) 47%, rgba(99,134,120,.13) 49%, transparent 50%), linear-gradient(125deg, transparent 46%, rgba(99,134,120,.1) 47%, rgba(99,134,120,.1) 49%, transparent 50%), radial-gradient(circle at 55% 48%, rgba(255,255,255,.85), transparent 32%), linear-gradient(90deg, rgba(255,255,255,.7) 1px, transparent 1px), linear-gradient(rgba(255,255,255,.7) 1px, transparent 1px); background-size: 190px 150px, 250px 190px, auto, 48px 48px, 48px 48px; }
+  .map-water { position: absolute; border-radius: 45% 55% 61% 39% / 43% 42% 58% 57%; background: rgba(92, 161, 181, .2); filter: blur(.2px); }
+  .water-one { left: 51%; top: -15%; height: 145%; width: 19%; transform: rotate(13deg); }
+  .water-two { left: 64%; top: 34%; height: 75%; width: 13%; transform: rotate(-18deg); opacity: .65; }
+  .map-road { position: absolute; height: 2px; background: rgba(255,255,255,.95); box-shadow: 0 0 0 1px rgba(125,148,137,.18); transform-origin: left center; }
+  .road-one { left: 0; top: 66%; width: 100%; transform: rotate(-17deg); }
+  .road-two { left: 8%; top: 22%; width: 85%; transform: rotate(30deg); }
+  .road-three { left: 15%; top: 87%; width: 90%; transform: rotate(-42deg); }
+  .map-label { position: absolute; color: rgba(76,101,91,.52); font-size: 9px; font-weight: 800; letter-spacing: .14em; }
+  .label-one { left: 59%; top: 29%; } .label-two { left: 17%; top: 31%; } .label-three { left: 73%; top: 13%; } .label-four { left: 19%; top: 61%; }
+  .map-marker { height: 34px; width: 34px; transform: translate(-50%, -50%); }
+  .marker-dot { position: absolute; left: 10px; top: 10px; height: 14px; width: 14px; border: 3px solid white; border-radius: 999px; background: var(--marker-color); box-shadow: 0 2px 8px rgba(30,50,46,.24); }
+  .marker-ring { position: absolute; inset: 0; border-radius: 999px; background: var(--marker-color); opacity: .17; animation: marker-pulse 2.3s infinite; }
+  .is-selected .marker-ring { animation-duration: 1.4s; opacity: .3; }
+  @keyframes marker-pulse { 0%, 100% { transform: scale(.75); opacity: .06; } 50% { transform: scale(1.25); opacity: .24; } }
 }
