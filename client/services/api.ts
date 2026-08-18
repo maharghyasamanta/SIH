@@ -1,3 +1,5 @@
+import type { FloodDataSummary } from "@shared/flood";
+
 const API_URL = import.meta.env.VITE_API_URL ?? "/api/v1";
 
 export async function apiRequest<T>(path: string, options?: RequestInit): Promise<T> {
@@ -22,6 +24,10 @@ export const disasterService = {
   getAlerts: () => apiRequest("/alerts"),
   getShelters: () => apiRequest("/shelters"),
   getHospitals: () => apiRequest("/hospitals"),
+};
+
+export const floodIntelligenceService = {
+  getSummary: () => apiRequest("/flood-intelligence/summary"),
 };
 
 export const aiService = {

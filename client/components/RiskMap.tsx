@@ -1,31 +1,52 @@
 import { useMemo, useState } from "react";
-import { Crosshair, Layers3, MapPin, Search, X } from "lucide-react";
-import { riskZones, type RiskLevel } from "@/data/demo";
+import { Check, Crosshair, Database, Layers3, MapPin, Search, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const filters: Array<{ label: RiskLevel; color: string }> = [
-  { label: "Critical", color: "#e65353" },
-  { label: "High", color: "#e98b42" },
-  { label: "Moderate", color: "#e4b94b" },
-  { label: "Low", color: "#57a681" },
+type IndiaRiskLevel = "Low" | "Moderate" | "High" | "Very High" | "Critical";
+
+type IndiaRegion = { id: string; state: string; context: string; risk: IndiaRiskLevel; score: number; top: string; left: string; color: string };
+
+const regions: IndiaRegion[] = [
+  { id: "assam", state: "Assam", context: "Historical flood hazard context", risk: "Very High", score: 77, top: "35%", left: "72%", color: "#e98b42" },
+  { id: "bihar", state: "Bihar", context: "Flood vulnerability context", risk: "High", score: 59, top: "42%", left: "58%", color: "#e4b94b" },
+  { id: "kerala", state: "Kerala", context: "Terrain and water-body context", risk: "High", score: 52, top: "80%", left: "42%", color: "#e4b94b" },
+  { id: "odisha", state: "Odisha", context: "Coastal flood hazard context", risk: "Moderate", score: 38, top: "57%", left: "64%", color: "#57a681" },
+  { id: "uttarakhand", state: "Uttarakhand", context: "Terrain vulnerability context", risk: "Very High", score: 71, top: "26%", left: "49%", color: "#e98b42" },
+];
+
+const layers = ["Current Floods", "Current Inundation", "IMD Rainfall", "IMD Warnings", "Flood Hazard", "Flood Vulnerability", "Historical Flood Areas", "Water Bodies", "Flood Risk Score"];
+
+const riskFilters: Array<{ label: IndiaRiskLevel; color: string }> = [
+  { label: "Critical", color: "#e65353" }, { label: "Very High", color: "#e98b42" }, { label: "High", color: "#e4b94b" }, { label: "Moderate", color: "#57a681" },
 ];
 
 export function RiskMap({ compact = false }: { compact?: boolean }) {
-  const [activeRisk, setActiveRisk] = useState<RiskLevel | "All">("All");
-  const [selectedId, setSelectedId] = useState("zone-4");
+  const [selectedId, setSelectedId] = useState("assam");
   const [query, setQuery] = useState("");
-  const selectedZone = riskZones.find((zone) => zone.id === selectedId) ?? riskZones[0];
-  const visibleZones = useMemo(() => riskZones.filter((zone) => (activeRisk === "All" || zone.risk === activeRisk) && zone.name.toLowerCase().includes(query.toLowerCase())), [activeRisk, query]);
+  const [selectedLayers, setSelectedLayers] = useState(["Flood Hazard", "Flood Risk Score"]);
+  const selected = regions.find((region) => region.id === selectedId) ?? regions[0];
+  const visibleRegions = useMemo(() => regions.filter((region) => region.state.toLowerCase().includes(query.toLowerCase())), [query]);
+  const toggleLayer = (layer: string) => setSelectedLayers((current) => current.includes(layer) ? current.filter((value) => value !== layer) : [...current, layer]);
 
-  return <div className={cn("relative overflow-hidden rounded-2xl border", compact ? "h-[380px] border-white/10" : "h-[620px] border-slate-200")}>
-    <div className="map-surface absolute inset-0">
-      <div className="map-water water-one" /><div className="map-water water-two" /><div className="map-road road-one" /><div className="map-road road-two" /><div className="map-road road-three" />
-      <div className="map-label label-one">RIVERSIDE</div><div className="map-label label-two">OLD TOWN</div><div className="map-label label-three">NORTH RIDGE</div><div className="map-label label-four">INDUSTRIAL BELT</div>
-      {visibleZones.map((zone) => <button key={zone.id} onClick={() => setSelectedId(zone.id)} className={cn("map-marker absolute z-10", selectedId === zone.id && "is-selected")} style={{ top: zone.coordinates.top, left: zone.coordinates.left, ["--marker-color" as string]: zone.color }} aria-label={`Select ${zone.name}`}><span className="marker-ring" /><span className="marker-dot" /></button>)}
-      <div className="absolute bottom-5 left-5 flex items-center gap-3 rounded-lg border border-white/60 bg-white/85 px-3 py-2 text-[10px] font-bold uppercase tracking-[.12em] text-slate-500 shadow-sm backdrop-blur"><Crosshair size={13} className="text-[#337e69]" /> Demo Region · 17.4° N, 78.4° E</div>
+  return <div className={cn("relative overflow-hidden rounded-2xl border", compact ? "h-[400px] border-white/10" : "h-[640px] border-slate-200")}>
+    <div className="india-map-surface absolute inset-0">
+      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 900 620" role="img" aria-label="Illustrative India flood intelligence map">
+        <path d="M360 56 L420 75 L454 112 L495 122 L525 158 L559 170 L574 214 L614 246 L631 291 L610 329 L637 374 L620 414 L589 438 L574 486 L547 526 L519 565 L496 540 L481 490 L454 454 L433 411 L409 372 L384 338 L360 309 L332 273 L300 245 L278 205 L292 168 L313 143 L321 103 Z" fill="rgba(205,221,214,.78)" stroke="#99aea3" strokeWidth="3" />
+        <path d="M624 220 L671 196 L722 204 L749 233 L731 257 L692 258 L663 275 Z" fill="rgba(205,221,214,.78)" stroke="#99aea3" strokeWidth="3" />
+        <path d="M462 136 L514 155 L540 206 L514 236 L470 220 L437 181 Z" fill="rgba(228,185,75,.22)" stroke="rgba(196,156,54,.55)" strokeWidth="2" />
+        <path d="M395 90 L431 104 L451 137 L423 161 L388 142 Z" fill="rgba(233,139,66,.24)" stroke="rgba(211,112,47,.55)" strokeWidth="2" />
+        <path d="M566 206 L613 224 L620 265 L592 280 L560 259 Z" fill="rgba(233,139,66,.24)" stroke="rgba(211,112,47,.55)" strokeWidth="2" />
+        <path d="M475 434 L522 453 L542 507 L515 538 L486 499 Z" fill="rgba(228,185,75,.22)" stroke="rgba(196,156,54,.55)" strokeWidth="2" />
+        <path d="M538 294 C561 300, 571 337, 555 375 C543 399, 535 419, 533 445" fill="none" stroke="rgba(84,151,179,.6)" strokeWidth="5" />
+        <path d="M438 90 C455 126, 454 171, 479 210" fill="none" stroke="rgba(84,151,179,.45)" strokeWidth="4" />
+        <text x="421" y="277" fill="#657c70" fontSize="12" fontWeight="700" letterSpacing="2">INDIA</text><text x="676" y="237" fill="#657c70" fontSize="10" fontWeight="700" letterSpacing="1">NORTH EAST</text>
+      </svg>
+      {visibleRegions.map((region) => <button key={region.id} onClick={() => setSelectedId(region.id)} className={cn("map-marker absolute z-10", selectedId === region.id && "is-selected")} style={{ top: region.top, left: region.left, ["--marker-color" as string]: region.color }} aria-label={`Select ${region.state}`}><span className="marker-ring" /><span className="marker-dot" /></button>)}
+      <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-lg border border-white/60 bg-white/85 px-3 py-2 text-[10px] font-bold uppercase tracking-[.11em] text-slate-500 shadow-sm backdrop-blur"><Database size={13} className="text-[#337e69]" /> Prototype map · no verified live feed</div>
     </div>
-    <div className="absolute left-4 right-4 top-4 flex flex-col gap-3 sm:left-5 sm:right-5 sm:flex-row sm:items-start sm:justify-between"><div className="relative w-full max-w-[260px]"><Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={15} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search zone or location" className="h-10 w-full rounded-lg border border-slate-200 bg-white/95 pl-9 pr-3 text-[12px] font-medium text-slate-700 outline-none placeholder:text-slate-400 focus:border-[#337e69]" /></div><div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white/95 p-1 shadow-sm"><button onClick={() => setActiveRisk("All")} className={cn("rounded-md px-3 py-2 text-[10px] font-bold", activeRisk === "All" ? "bg-slate-900 text-white" : "text-slate-500")}>All</button>{filters.map((filter) => <button key={filter.label} onClick={() => setActiveRisk(filter.label)} className={cn("flex items-center gap-1.5 rounded-md px-2 py-2 text-[10px] font-bold", activeRisk === filter.label ? "bg-slate-100 text-slate-900" : "text-slate-500")}><span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: filter.color }} />{filter.label}</button>)}</div></div>
-    {!compact && <div className="absolute bottom-5 right-5 flex flex-col gap-1 rounded-lg border border-slate-200 bg-white/95 p-1 shadow-sm"><button className="flex h-8 w-8 items-center justify-center text-slate-500 hover:text-slate-900"><Layers3 size={15} /></button><button className="flex h-8 w-8 items-center justify-center border-t border-slate-100 text-slate-500 hover:text-slate-900"><Crosshair size={15} /></button></div>}
-    <div className={cn("absolute bottom-5 right-5 w-[calc(100%-2rem)] max-w-[310px] rounded-xl border border-slate-200 bg-white/95 p-4 shadow-[0_12px_40px_rgba(25,42,50,.15)] backdrop-blur", compact ? "block" : "sm:right-14")}><div className="flex items-start justify-between"><div><div className="mb-1 flex items-center gap-2"><span className="h-2 w-2 rounded-full" style={{ backgroundColor: selectedZone.color }} /><span className="text-[10px] font-bold uppercase tracking-[.14em] text-slate-400">{selectedZone.type}</span></div><h3 className="text-[15px] font-extrabold tracking-tight text-slate-900">{selectedZone.name}</h3></div><button onClick={() => setSelectedId("")} className="text-slate-400 hover:text-slate-900"><X size={15} /></button></div><div className="mt-4 grid grid-cols-2 gap-3 border-y border-slate-100 py-3"><div><p className="text-[10px] font-medium text-slate-400">Risk score</p><p className="mt-0.5 text-[17px] font-extrabold text-slate-900">{selectedZone.score}<span className="text-[11px] text-slate-400">/100</span></p></div><div><p className="text-[10px] font-medium text-slate-400">At risk</p><p className="mt-0.5 text-[17px] font-extrabold text-slate-900">{selectedZone.population}</p></div></div><div className="flex items-center justify-between"><span className="rounded-full px-2 py-1 text-[10px] font-extrabold uppercase" style={{ backgroundColor: `${selectedZone.color}18`, color: selectedZone.color }}>{selectedZone.risk} risk</span><span className="flex items-center gap-1 text-[11px] font-semibold text-[#337e69]"><MapPin size={12} /> 2.4 km to shelter</span></div></div>
+    <div className="absolute left-4 top-4 z-20 w-[calc(100%-2rem)] sm:left-5 sm:w-auto"><div className="relative w-full sm:w-[255px]"><Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={15} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search state or district" className="h-10 w-full rounded-lg border border-slate-200 bg-white/95 pl-9 pr-3 text-[12px] font-medium text-slate-700 outline-none placeholder:text-slate-400 focus:border-[#337e69]" /></div></div>
+    <div className="absolute right-4 top-4 z-20 hidden w-[220px] rounded-xl border border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur lg:block"><p className="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[.14em] text-slate-500"><Layers3 size={13} /> Flood layers</p><div className="mt-2 max-h-[220px] space-y-1 overflow-y-auto pr-1">{layers.map((layer) => <button key={layer} onClick={() => toggleLayer(layer)} className="flex w-full items-center gap-2 rounded-md px-1.5 py-1.5 text-left text-[10px] font-semibold text-slate-600 hover:bg-slate-100"><span className={cn("flex h-3.5 w-3.5 items-center justify-center rounded border", selectedLayers.includes(layer) ? "border-[#337e69] bg-[#337e69] text-white" : "border-slate-300 bg-white")}>{selectedLayers.includes(layer) && <Check size={9} strokeWidth={3} />}</span>{layer}</button>)}</div></div>
+    <div className={cn("absolute bottom-4 right-4 z-20 w-[calc(100%-2rem)] max-w-[325px] rounded-xl border border-slate-200 bg-white/95 p-4 shadow-[0_12px_40px_rgba(25,42,50,.15)] backdrop-blur", compact ? "block" : "sm:right-5")}><div className="flex items-start justify-between"><div><p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-slate-400"><MapPin size={11} /> {selected.context}</p><h3 className="mt-1 text-[16px] font-extrabold tracking-tight text-slate-900">{selected.state}</h3></div><span className="rounded-full px-2 py-1 text-[9px] font-extrabold uppercase" style={{ backgroundColor: `${selected.color}18`, color: selected.color }}>{selected.risk}</span></div><div className="mt-4 grid grid-cols-2 gap-3 border-y border-slate-100 py-3"><div><p className="text-[10px] text-slate-400">Prototype score</p><p className="mt-0.5 text-[18px] font-extrabold text-slate-900">{selected.score}<span className="text-[10px] font-medium text-slate-400"> / 100</span></p></div><div><p className="text-[10px] text-slate-400">Live event status</p><p className="mt-1 text-[11px] font-extrabold text-slate-500">Not connected</p></div></div><p className="mt-3 flex items-start gap-1.5 text-[10px] leading-4 text-slate-500"><ShieldAlert size={12} className="mt-0.5 shrink-0 text-[#e98b42]" /> Risk context is illustrative until Bhuvan and IMD feeds are configured.</p></div>
+    <div className="absolute left-4 top-[62px] z-20 flex max-w-[calc(100%-2rem)] flex-wrap gap-1.5 sm:left-5">{riskFilters.map((filter) => <span key={filter.label} className="flex items-center gap-1.5 rounded-full border border-white/70 bg-white/80 px-2 py-1 text-[9px] font-bold text-slate-600"><span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: filter.color }} />{filter.label}</span>)}</div>
   </div>;
 }
