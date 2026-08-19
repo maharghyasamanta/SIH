@@ -27,7 +27,7 @@ export function DashboardShell({ children, dark = false }: { children: React.Rea
           </Link>
           <button className="lg:hidden" onClick={() => setOpen(false)} aria-label="Close navigation"><X size={20} /></button>
         </div>
-        <div className="px-4 pb-5"><div className={cn("flex items-center gap-2 rounded-lg px-3 py-2 text-[10px] font-bold uppercase tracking-[.15em]", dark ? "bg-[#18242d] text-[#74c5a5]" : "bg-[#f2f7f6] text-[#337e69]")}><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#50b38d]" /> Demo mode · latest data</div></div>
+        <div className="px-4 pb-5"><div className={cn("flex items-center gap-2 rounded-lg px-3 py-2 text-[10px] font-bold uppercase tracking-[.15em]", dark ? "bg-[#18242d] text-[#74c5a5]" : "bg-[#f2f7f6] text-[#337e69]")}><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#50b38d]" /> Demo mode · illustrative data</div></div>
         <nav className="flex-1 space-y-1 px-3">
           <p className={cn("mb-3 px-3 text-[10px] font-bold uppercase tracking-[.18em]", dark ? "text-slate-500" : "text-slate-400")}>Public access</p>
           {navigation.map((item) => {
