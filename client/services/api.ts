@@ -27,7 +27,7 @@ export const disasterService = {
 };
 
 export const floodIntelligenceService = {
-  getSummary: () => apiRequest("/flood-intelligence/summary"),
+  getSummary: () => apiRequest<FloodDataSummary>("/flood-intelligence/summary"),
 };
 
 export const aiService = {

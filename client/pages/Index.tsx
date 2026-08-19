@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ArrowUpRight, CheckCircle2, CloudRain, Database, ExternalLink, FileWarning, Layers3, Radio, ShieldAlert, Sparkles } from "lucide-react";
 import { DashboardShell } from "@/components/DashboardShell";
 import { RiskMap } from "@/components/RiskMap";
+import { floodIntelligenceService } from "@/services/api";
 import type { FloodDataSummary } from "@shared/flood";
 
 const fallback: FloodDataSummary = { mode: "prototype", updatedAt: null, sources: [{ name: "Bhuvan / NRSC", status: "not_configured", purpose: "Flood hazard, inundation, vulnerability, terrain and water-body layers" }, { name: "IMD", status: "not_configured", purpose: "Rainfall observations, QPF and official weather warnings" }], risk: { score: 39, level: "Moderate", currentRisk: 0, forecastRisk: 0, historicalRisk: 57, modelLabel: "AI-Assisted Flood Risk Score — Prototype", explanation: "Flood risk is moderate because historical flood hazard, water-body exposure, and terrain vulnerability are elevated in the normalized input data.", contributingFactors: [{ label: "Current inundation", value: 0, level: "Low" }, { label: "Current rainfall", value: 0, level: "Low" }, { label: "Rainfall forecast", value: 0, level: "Low" }, { label: "Historical flood hazard", value: 68, level: "Very High" }, { label: "Terrain vulnerability", value: 55, level: "High" }, { label: "Population exposure", value: 58, level: "High" }] }, currentEvents: [] };
@@ -15,7 +16,7 @@ export default function Index() {
   const [view, setView] = useState<"Current" | "Forecast" | "30-day history">("Current");
 
   useEffect(() => {
-    fetch("/api/v1/flood-intelligence/summary").then((response) => response.ok ? response.json() : Promise.reject()).then((data: FloodDataSummary) => { setSummary(data); setServiceState("available"); }).catch(() => setServiceState("unavailable"));
+    floodIntelligenceService.getSummary().then((data) => { setSummary(data); setServiceState("available"); }).catch(() => setServiceState("unavailable"));
   }, []);
 
   return <DashboardShell><main>
