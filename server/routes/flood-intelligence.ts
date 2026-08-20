@@ -1,9 +1,10 @@
 import { RequestHandler } from "express";
 import { FloodDataSummary } from "@shared/flood";
-import { normalizeFloodInputs } from "../flood/adapters";
+import { getFloodSourceAdapters, normalizeFloodInputs } from "../flood/adapters";
 import { calculateFloodRisk } from "../flood/risk-engine";
 
 export const handleFloodIntelligence: RequestHandler = (_req, res) => {
+  const adapters = getFloodSourceAdapters();
   const indicators = normalizeFloodInputs([
     {
       currentRainfall: 0,
@@ -20,10 +21,11 @@ export const handleFloodIntelligence: RequestHandler = (_req, res) => {
 
   const response: FloodDataSummary = {
     mode: "prototype",
-    sources: [
-      { name: "Bhuvan / NRSC", status: "not_configured", purpose: "Flood hazard, inundation, vulnerability, terrain and water-body layers" },
-      { name: "IMD", status: "not_configured", purpose: "Rainfall observations, QPF and official weather warnings" },
-    ],
+    sources: adapters.map((adapter) => ({
+      name: adapter.name,
+      status: adapter.isConfigured() ? "configured" : "not_configured",
+      purpose: adapter.purpose,
+    })),
     updatedAt: null,
     risk: calculateFloodRisk(indicators),
     currentEvents: [],
