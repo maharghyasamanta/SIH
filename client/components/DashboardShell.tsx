@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Activity, BarChart3, Bell, Building2, ChevronRight, Command, Home, Map, Menu, Package, ShieldCheck, Siren, Users, X } from "lucide-react";
+import { NotificationPanel } from "@/components/NotificationPanel";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -15,6 +16,7 @@ const navigation = [
 
 export function DashboardShell({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
   const [open, setOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const location = useLocation();
 
   return (
@@ -46,7 +48,7 @@ export function DashboardShell({ children, dark = false }: { children: React.Rea
         <header className={cn("sticky top-0 z-40 flex h-[70px] items-center justify-between border-b px-4 sm:px-8", dark ? "border-white/8 bg-[#0b1117]/95 backdrop-blur" : "border-slate-200 bg-white/95 backdrop-blur")}>
           <button className={cn("rounded-lg p-2 lg:hidden", dark ? "text-slate-300 hover:bg-white/10" : "text-slate-600 hover:bg-slate-100")} onClick={() => setOpen(true)} aria-label="Open navigation"><Menu size={21} /></button>
           <div className="hidden items-center gap-2 text-[11px] font-semibold text-slate-400 sm:flex"><span className="h-2 w-2 rounded-full bg-[#4fb489]" /> System operational <span className="mx-2 text-slate-300">/</span> Last synced 2 min ago</div>
-          <div className="ml-auto flex items-center gap-3"><button className={cn("relative rounded-lg p-2 transition", dark ? "text-slate-400 hover:bg-white/10 hover:text-white" : "text-slate-500 hover:bg-slate-100")}><Bell size={18} /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-[#e55252]" /></button><div className={cn("hidden h-7 w-px sm:block", dark ? "bg-white/10" : "bg-slate-200")} /><div className="flex items-center gap-2"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#213842] text-[11px] font-bold text-[#a8d3c4]">AK</span><div className="hidden text-left sm:block"><p className={cn("text-[11px] font-bold", dark ? "text-white" : "text-slate-800")}>Aarav Kapoor</p><p className="text-[10px] text-slate-400">Response lead</p></div></div></div>
+          <div className="ml-auto flex items-center gap-3"><div className="relative"><button onClick={() => setNotificationsOpen((current) => !current)} aria-label="Open recent disaster notifications" aria-expanded={notificationsOpen} className={cn("relative rounded-lg p-2 transition", dark ? "text-slate-400 hover:bg-white/10 hover:text-white" : "text-slate-500 hover:bg-slate-100")}><Bell size={18} /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-[#e55252]" /></button>{notificationsOpen && <NotificationPanel dark={dark} onClose={() => setNotificationsOpen(false)} />}</div><div className={cn("hidden h-7 w-px sm:block", dark ? "bg-white/10" : "bg-slate-200")} /><div className="flex items-center gap-2"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#213842] text-[11px] font-bold text-[#a8d3c4]">AK</span><div className="hidden text-left sm:block"><p className={cn("text-[11px] font-bold", dark ? "text-white" : "text-slate-800")}>Aarav Kapoor</p><p className="text-[10px] text-slate-400">Response lead</p></div></div></div>
         </header>
         {children}
       </div>
