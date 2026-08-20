@@ -32,7 +32,7 @@ export function RiskMap({ compact = false, period = "current" }: { compact?: boo
 
   return <div className={cn("relative overflow-hidden rounded-2xl border", compact ? "h-[400px] border-white/10" : "h-[640px] border-slate-200")}>
     <div className="india-map-surface absolute inset-0">
-      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 900 620" role="img" aria-label="India disaster intelligence map with prototype current disaster markers">
+      <svg className="absolute inset-0 h-full w-full" viewBox="240 20 560 570" preserveAspectRatio="xMidYMid meet" role="img" aria-label="India disaster intelligence map with prototype current disaster markers">
         <path d="M307 70 L350 52 L395 64 L426 87 L464 95 L493 120 L526 127 L550 150 L586 166 L604 195 L632 215 L639 245 L670 263 L686 291 L672 321 L685 352 L670 378 L644 397 L635 431 L613 450 L602 484 L577 509 L557 545 L536 568 L514 544 L499 509 L476 483 L454 448 L438 412 L417 378 L397 348 L374 320 L344 296 L322 269 L294 247 L274 216 L267 181 L281 150 L291 117 Z" fill="rgba(205,221,214,.8)" stroke="#80998c" strokeWidth="3" strokeLinejoin="round" />
         <path d="M639 216 L675 191 L716 197 L748 217 L780 243 L770 265 L739 271 L708 259 L678 273 L658 254 Z" fill="rgba(205,221,214,.8)" stroke="#80998c" strokeWidth="3" strokeLinejoin="round" />
         <path d="M422 87 L461 95 L486 120 L466 145 L433 140 L401 116 Z" fill="rgba(233,139,66,.18)" stroke="rgba(211,112,47,.46)" strokeWidth="2" />
