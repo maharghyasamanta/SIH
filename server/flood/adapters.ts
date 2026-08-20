@@ -31,6 +31,7 @@ export class BhuvanAdapter extends ConfiguredAdapter {
   readonly name = "Bhuvan / NRSC";
   readonly purpose = "Village geocoding, LULC, flood hazard, inundation, terrain and water-body context";
   readonly requiredEnv = [
+    "BHUVAN_POSTAL_HOSPITAL_TOKEN",
     "BHUVAN_VILLAGE_GEOCODING_KEY",
     "BHUVAN_VILLAGE_REVERSE_GEOCODING_KEY",
     "BHUVAN_LULC_STATISTICS_KEY",

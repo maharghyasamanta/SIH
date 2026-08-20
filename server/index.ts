@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleFloodIntelligence } from "./routes/flood-intelligence";
+import { handleFacilities, handleLulcAoi, handleLulcStatistics, handleVillageGeocode, handleVillageReverseGeocode } from "./routes/bhuvan";
 
 export function createServer() {
   const app = express();
@@ -20,6 +21,11 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
   app.get("/api/v1/flood-intelligence/summary", handleFloodIntelligence);
+  app.get("/api/v1/bhuvan/facilities", handleFacilities);
+  app.get("/api/v1/bhuvan/village/geocode", handleVillageGeocode);
+  app.get("/api/v1/bhuvan/village/reverse-geocode", handleVillageReverseGeocode);
+  app.get("/api/v1/bhuvan/lulc/statistics", handleLulcStatistics);
+  app.get("/api/v1/bhuvan/lulc/aoi", handleLulcAoi);
 
   return app;
 }
