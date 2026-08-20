@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import CommandCenter from "./pages/CommandCenter";
 import Placeholder from "./pages/Placeholder";
 import Hospitals from "./pages/Hospitals";
+import RiskAnalysis from "./pages/RiskAnalysis";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,7 +25,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/command-center" element={<CommandCenter />} />
           <Route path="/map" element={<Placeholder />} />
-          <Route path="/risk" element={<Placeholder />} />
+          <Route path="/risk" element={<RiskAnalysis />} />
           <Route path="/shelters" element={<Placeholder />} />
           <Route path="/hospitals" element={<Hospitals />} />
           <Route path="/report" element={<Placeholder />} />
