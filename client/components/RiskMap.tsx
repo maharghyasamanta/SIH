@@ -14,6 +14,9 @@ export const indiaDisasterEvents: IndiaDisasterEvent[] = [
   { id: "kerala-flood", state: "Kerala", district: "Idukki", hazard: "Flash flood", risk: "High", score: 58, top: "81%", left: "41%", color: "#e4b94b", updated: "Demo timestamp · 8 hrs ago", source: "Prototype hazard module", date: "Yesterday", status: "Monitoring" },
   { id: "gujarat-heatwave", state: "Gujarat", district: "Ahmedabad", hazard: "Extreme heat", risk: "Moderate", score: 42, top: "50%", left: "25%", color: "#57a681", updated: "Demo timestamp · 2 days ago", source: "Prototype weather module", date: "2 days ago", status: "Resolved" },
   { id: "sikkim-landslide", state: "Sikkim", district: "Gangtok", hazard: "Landslide", risk: "High", score: 55, top: "29%", left: "69%", color: "#e4b94b", updated: "Demo timestamp · 4 days ago", source: "Prototype hazard module", date: "4 days ago", status: "Resolved" },
+  { id: "delhi-earthquake", state: "Delhi", district: "New Delhi", hazard: "Earthquake", risk: "High", score: 61, top: "34%", left: "49%", color: "#e65353", updated: "Demo timestamp · 5 hrs ago", source: "Prototype seismic module", date: "Today", status: "Monitoring" },
+  { id: "maharashtra-wildfire", state: "Maharashtra", district: "Nashik", hazard: "Wildfire", risk: "High", score: 63, top: "63%", left: "35%", color: "#e98b42", updated: "Demo timestamp · 6 hrs ago", source: "Prototype wildfire module", date: "Today", status: "Active" },
+  { id: "andhra-urban-incident", state: "Andhra Pradesh", district: "Visakhapatnam", hazard: "Urban incident", risk: "Moderate", score: 46, top: "65%", left: "61%", color: "#57a681", updated: "Demo timestamp · 1 day ago", source: "Prototype incident module", date: "Yesterday", status: "Monitoring" },
 ];
 
 const layers = ["Active disasters", "Weather & warnings", "Flood intelligence", "Cyclone tracks", "Earthquake activity", "Landslide susceptibility", "Wildfire hotspots", "Shelters & hospitals", "Disaster risk score"];
