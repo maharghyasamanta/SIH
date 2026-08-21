@@ -40,6 +40,10 @@ export const bhuvanService = {
   getLulcAoi: (geom: string) => apiRequest(`/bhuvan/lulc/aoi?${query({ geom })}`),
 };
 
+export const emergencyService = {
+  queueSms: (payload: { recipients: string[]; message: string; alertType: "warning" | "emergency" | "evacuation" | "shelter" | "weather" }) => apiRequest<{ status: "queued"; recipients: number }>("/emergency/sms", { method: "POST", body: JSON.stringify(payload) }),
+};
+
 export const aiService = {
   predictRisk: (payload: unknown) => apiRequest("/ai/risk-prediction", { method: "POST", body: JSON.stringify(payload) }),
   classifyIncident: (payload: FormData) => apiRequest("/ai/classify-incident", { method: "POST", body: payload, headers: {} }),
