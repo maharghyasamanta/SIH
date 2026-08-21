@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Activity, BarChart3, Bell, Building2, ChevronRight, Command, Home, Map, Menu, Package, ShieldCheck, Siren, Users, X } from "lucide-react";
+import { DemoAlertButton } from "@/components/DemoAlertButton";
 import { NotificationPanel } from "@/components/NotificationPanel";
 import { cn } from "@/lib/utils";
 
@@ -37,7 +38,8 @@ export function DashboardShell({ children, dark = false }: { children: React.Rea
             const Icon = item.icon;
             return <Link key={item.href} to={item.href} onClick={() => setOpen(false)} className={cn("group flex items-center justify-between rounded-lg px-3 py-2.5 text-[13px] font-semibold transition", active ? (dark ? "bg-[#24333c] text-white" : "bg-[#f0f4f5] text-slate-950") : (dark ? "text-slate-400 hover:bg-white/5 hover:text-white" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950"))}><span className="flex items-center gap-3"><Icon size={17} strokeWidth={1.8} />{item.label}</span>{active && <span className="h-1.5 w-1.5 rounded-full bg-[#e55252]" />}</Link>;
           })}
-          <p className={cn("mb-3 mt-8 px-3 text-[10px] font-bold uppercase tracking-[.18em]", dark ? "text-slate-500" : "text-slate-400")}>Authority workspace</p>
+          <div className="px-3 py-3"><DemoAlertButton /></div>
+          <p className={cn("mb-3 mt-5 px-3 text-[10px] font-bold uppercase tracking-[.18em]", dark ? "text-slate-500" : "text-slate-400")}>Authority workspace</p>
           <Link to="/command-center" onClick={() => setOpen(false)} className={cn("group flex items-center justify-between rounded-lg px-3 py-2.5 text-[13px] font-semibold transition", location.pathname === "/command-center" ? "bg-[#e55252] text-white" : (dark ? "text-slate-400 hover:bg-white/5 hover:text-white" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950"))}><span className="flex items-center gap-3"><Command size={17} strokeWidth={1.8} />Command center</span><ChevronRight size={14} /></Link>
           <Link to="/analytics" onClick={() => setOpen(false)} className={cn("group flex items-center justify-between rounded-lg px-3 py-2.5 text-[13px] font-semibold transition", dark ? "text-slate-400 hover:bg-white/5 hover:text-white" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950")}><span className="flex items-center gap-3"><BarChart3 size={17} strokeWidth={1.8} />Analytics</span><ChevronRight size={14} /></Link>
           <Link to="/resources" onClick={() => setOpen(false)} className={cn("group flex items-center justify-between rounded-lg px-3 py-2.5 text-[13px] font-semibold transition", dark ? "text-slate-400 hover:bg-white/5 hover:text-white" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950")}><span className="flex items-center gap-3"><Package size={17} strokeWidth={1.8} />Resources</span><ChevronRight size={14} /></Link>
