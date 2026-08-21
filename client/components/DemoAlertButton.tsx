@@ -5,7 +5,7 @@ import { emergencyService } from "@/services/api";
 export function DemoAlertButton() {
   const [open, setOpen] = useState(false);
   const [sent, setSent] = useState(false);
-  const [message, setMessage] = useState("Demo alert: Elevated disaster risk detected in Zone 4. Follow official instructions and move toward designated shelters.");
+  const [message, setMessage] = useState("Cloud burst alert: Elevated disaster risk detected in Zone 4. Follow official instructions and move toward designated shelters. Weather: Heavy rain and thunderstorms. Temperature: 22°C.");
   const [error, setError] = useState("");
   const [subscriberCount, setSubscriberCount] = useState(0);
 
