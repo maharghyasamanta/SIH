@@ -12,11 +12,16 @@ export async function apiRequest<T>(path: string, options?: RequestInit): Promis
     },
   });
 
+  const payload = await response.json().catch(() => null) as { error?: string } | T | null;
+
   if (!response.ok) {
-    throw new Error(`Service unavailable: ${response.status}`);
+    const message = payload && typeof payload === "object" && "error" in payload && typeof payload.error === "string"
+      ? payload.error
+      : `Service unavailable: ${response.status}`;
+    throw new Error(message);
   }
 
-  return response.json() as Promise<T>;
+  return payload as T;
 }
 
 export const disasterService = {
