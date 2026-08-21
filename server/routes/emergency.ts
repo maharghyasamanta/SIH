@@ -1,12 +1,29 @@
 import { RequestHandler } from "express";
 import { z } from "zod";
 import { classifyInboundKeyword, isMsg91Configured, queueEmergencySms } from "../services/msg91";
+import { getSignedInMobiles, registerSignedInMobile } from "../services/subscribers";
 
 const emergencyAlertSchema = z.object({
   recipients: z.array(z.string().trim().regex(/^\+?[1-9]\d{9,14}$/)).min(1).max(1000),
   message: z.string().trim().min(10).max(480),
   alertType: z.enum(["warning", "emergency", "evacuation", "shelter", "weather"]).default("emergency"),
 });
+
+const mobileSchema = z.object({ mobile: z.string().trim().regex(/^\+?[1-9]\d{9,14}$/) });
+
+export const handleRegisterSubscriber: RequestHandler = (req, res) => {
+  const parsed = mobileSchema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: "Enter a valid mobile number with country code." });
+  return res.status(201).json(registerSignedInMobile(parsed.data.mobile));
+};
+
+export const handleDemoEmergency: RequestHandler = (req, res) => {
+  const parsed = z.object({ message: z.string().trim().min(10).max(280) }).safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ error: "Provide a demo alert message under 280 characters." });
+  const recipients = getSignedInMobiles();
+  if (recipients.length === 0) return res.status(409).json({ error: "No signed-in mobile subscribers are available for this demo alert." });
+  return res.status(200).json({ status: "simulated", subscribers: recipients.length });
+};
 
 export const handleEmergencySms: RequestHandler = async (req, res) => {
   const parsed = emergencyAlertSchema.safeParse(req.body);

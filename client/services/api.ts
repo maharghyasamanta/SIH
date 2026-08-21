@@ -42,6 +42,8 @@ export const bhuvanService = {
 
 export const emergencyService = {
   queueSms: (payload: { recipients: string[]; message: string; alertType: "warning" | "emergency" | "evacuation" | "shelter" | "weather" }) => apiRequest<{ status: "queued"; recipients: number }>("/emergency/sms", { method: "POST", body: JSON.stringify(payload) }),
+  registerSubscriber: (mobile: string) => apiRequest<{ registered: boolean; subscribers: number }>("/emergency/subscribers", { method: "POST", body: JSON.stringify({ mobile }) }),
+  sendDemoAlert: (message: string) => apiRequest<{ status: "simulated"; subscribers: number }>("/emergency/demo", { method: "POST", body: JSON.stringify({ message }) }),
 };
 
 export const aiService = {

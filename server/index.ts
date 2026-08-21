@@ -4,7 +4,7 @@ import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleFloodIntelligence } from "./routes/flood-intelligence";
 import { handleFacilities, handleLulcAoi, handleLulcStatistics, handleVillageGeocode, handleVillageReverseGeocode } from "./routes/bhuvan";
-import { handleEmergencySms, handleInboundEmergencySms } from "./routes/emergency";
+import { handleDemoEmergency, handleEmergencySms, handleInboundEmergencySms, handleRegisterSubscriber } from "./routes/emergency";
 
 export function createServer() {
   const app = express();
@@ -29,6 +29,8 @@ export function createServer() {
   app.get("/api/v1/bhuvan/lulc/aoi", handleLulcAoi);
   app.post("/api/v1/emergency/sms", handleEmergencySms);
   app.post("/api/v1/emergency/sms/inbound", handleInboundEmergencySms);
+  app.post("/api/v1/emergency/subscribers", handleRegisterSubscriber);
+  app.post("/api/v1/emergency/demo", handleDemoEmergency);
 
   return app;
 }
