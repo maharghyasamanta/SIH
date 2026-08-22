@@ -1,8 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { Activity, BarChart3, Bell, Building2, ChevronRight, Command, Home, Map, Menu, Package, ShieldCheck, Siren, Users, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Activity, BarChart3, Bell, Building2, ChevronRight, Command, Home, LogIn, Map, Menu, Package, ShieldCheck, Siren, Users, X } from "lucide-react";
 import { DemoAlertButton } from "@/components/DemoAlertButton";
 import { NotificationPanel } from "@/components/NotificationPanel";
+import { clearStoredRole } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -19,6 +21,8 @@ export function DashboardShell({ children, dark = false }: { children: React.Rea
   const [open, setOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const returnToLogin = () => { clearStoredRole(); setOpen(false); navigate("/signin", { replace: true }); };
 
   return (
     <div className={cn("min-h-screen", dark ? "bg-[#0b1117] text-white" : "bg-[#f7f9fb] text-slate-950")}>
@@ -43,6 +47,7 @@ export function DashboardShell({ children, dark = false }: { children: React.Rea
           <Link to="/command-center" onClick={() => setOpen(false)} className={cn("group flex items-center justify-between rounded-lg px-3 py-2.5 text-[13px] font-semibold transition", location.pathname === "/command-center" ? "bg-[#e55252] text-white" : (dark ? "text-slate-400 hover:bg-white/5 hover:text-white" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950"))}><span className="flex items-center gap-3"><Command size={17} strokeWidth={1.8} />Command center</span><ChevronRight size={14} /></Link>
           <Link to="/analytics" onClick={() => setOpen(false)} className={cn("group flex items-center justify-between rounded-lg px-3 py-2.5 text-[13px] font-semibold transition", dark ? "text-slate-400 hover:bg-white/5 hover:text-white" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950")}><span className="flex items-center gap-3"><BarChart3 size={17} strokeWidth={1.8} />Analytics</span><ChevronRight size={14} /></Link>
           <Link to="/resources" onClick={() => setOpen(false)} className={cn("group flex items-center justify-between rounded-lg px-3 py-2.5 text-[13px] font-semibold transition", dark ? "text-slate-400 hover:bg-white/5 hover:text-white" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950")}><span className="flex items-center gap-3"><Package size={17} strokeWidth={1.8} />Resources</span><ChevronRight size={14} /></Link>
+          <button type="button" onClick={returnToLogin} className={cn("mt-5 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[13px] font-semibold transition", dark ? "text-slate-400 hover:bg-white/5 hover:text-white" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950")}><LogIn size={17} strokeWidth={1.8} />Back to login</button>
         </nav>
         <div className={cn("m-4 rounded-xl p-4", dark ? "bg-[#18242d]" : "bg-[#f5f7f8]")}><div className="mb-3 flex items-center gap-2"><Users size={15} className={dark ? "text-[#73c6a6]" : "text-[#337e69"} /><span className="text-[11px] font-bold uppercase tracking-[.12em] text-slate-400">India response network</span></div><p className={cn("text-[12px] leading-5", dark ? "text-slate-300" : "text-slate-600")}>Connected to 48 field teams across the India demo network.</p><div className="mt-3 flex -space-x-2"><span className="avatar bg-[#d8a57c]">AR</span><span className="avatar bg-[#719e96]">VS</span><span className="avatar bg-[#8f7cae]">NK</span><span className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-slate-200 text-[9px] font-bold text-slate-600">+45</span></div></div>
       </aside>
