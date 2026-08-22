@@ -61,6 +61,8 @@
   .map-label { position: absolute; color: rgba(76,101,91,.52); font-size: 9px; font-weight: 800; letter-spacing: .14em; }
   .label-one { left: 59%; top: 29%; } .label-two { left: 17%; top: 31%; } .label-three { left: 73%; top: 13%; } .label-four { left: 19%; top: 61%; }
   .map-marker { height: 34px; width: 34px; transform: translate(-50%, -50%); }
+  .facility-marker { height: 24px; width: 24px; transform: translate(-50%, -50%); border: 2px solid white; border-radius: 999px; background: #337e69; box-shadow: 0 2px 8px rgba(30,50,46,.24); }
+  .facility-marker span { position: absolute; left: 6px; top: 6px; height: 8px; width: 8px; border-radius: 999px; background: white; }
   .marker-dot { position: absolute; left: 10px; top: 10px; height: 14px; width: 14px; border: 3px solid white; border-radius: 999px; background: var(--marker-color); box-shadow: 0 2px 8px rgba(30,50,46,.24); }
   .marker-ring { position: absolute; inset: 0; border-radius: 999px; background: var(--marker-color); opacity: .17; animation: marker-pulse 2.3s infinite; }
   .is-selected .marker-ring { animation-duration: 1.4s; opacity: .3; }
